@@ -4,40 +4,53 @@ class UserAnalytics(db.Model):
     __tablename__ = "user_analytics"
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
     total_visitors = db.Column(db.Integer)
     new_visitors = db.Column(db.Integer)
     returning_visitors = db.Column(db.Integer)
+
+    user = db.relationship("User", backref=db.backref("user_analytics", uselist=False))
+
 
 
 class ContractAnalytics(db.Model):
     __tablename__ = "contract_analytics"
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     in_progress = db.Column(db.Integer)
     signed = db.Column(db.Integer)
     total = db.Column(db.Integer)
     rejected = db.Column(db.Integer)
+
+    user = db.relationship("User", backref=db.backref("contract_analytics", uselist=False))
+
 
 
 class DealAnalytics(db.Model):
     __tablename__ = "deal_analytics"
 
     id = db.Column(db.Integer, primary_key=True)
-    completed = db.Column(db.Integer)
-    in_progress = db.Column(db.Integer)
-    total = db.Column(db.Integer)
-    avg_deal_size = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    deals_count = db.Column(db.Integer)
+    revenue = db.Column(db.Float)
 
+    user = db.relationship("User", backref="deal_analytics")
 
 class TopEmployee(db.Model):
     __tablename__ = "top_employee"
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)  
     name = db.Column(db.String(100))
     department = db.Column(db.String(50))
     kpi = db.Column(db.Float)
     deals_closed = db.Column(db.Integer)
     revenue_generated = db.Column(db.Integer)
+
+    user = db.relationship("User", backref="top_employees") 
+
 
 
 class PerformanceAnalytics(db.Model):
