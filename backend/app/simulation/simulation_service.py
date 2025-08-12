@@ -1,4 +1,3 @@
-# app/simulation/simulation_service.py
 from datetime import datetime, timedelta
 import random
 import numpy as np
